@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeNest Realty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #0b1c3f;
+      --accent: #d4af37;
+      --hover-gold: #b78c2b;
+      --bg-white: #ffffff;
+      --text-dark: #333;
+      --muted: #7a7a7a;
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-white);
+      color: var(--text-dark);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+    }
+
+    header .logo img {
+      height: 40px;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      background: url(https://patch.com/img/cdn20/users/24938404/20210624/040857/3-westchester-apartments-flight-facade-evening-4-copy___24160855313.jpg) center center/cover no-repeat;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: background-size 0.5s ease-in-out;
+    }
+
+    .hero:hover {
+      background-size: 105%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 28, 63, 0.4);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-family: var(--font-heading);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero .cta-btns a {
+      display: inline-block;
+      margin: 0 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .hero .cta-btns a:hover {
+      background: var(--hover-gold);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      nav a {
+        margin: 0 0.5rem;
+      }
+
+      .hero .cta-btns a {
+        margin: 0.5rem 0.25rem;
+        padding: 0.6rem 1rem;
+      }
+    }
+.featured-properties {
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.featured-properties h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--primary);
+}
+
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.property-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.property-card:hover {
+  transform: scale(1.02);
+}
+
+.property-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: opacity 0.3s;
+}
+
+.card-info {
+  padding: 1rem;
+}
+
+.card-info h3 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.card-info p {
+  margin: 0.3rem 0;
+  color: var(--text-dark);
+}
+
+.card-info i {
+  color: var(--accent);
+  margin-right: 0.4rem;
+}
+
+.view-btn {
+  margin-top: 1rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.view-btn:hover {
+  background: var(--hover-gold);
+}
+
+/* Lightbox Styling */
+#lightbox {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  border-radius: 8px;
+}
+.search-filter-section {
+  background: #f4f6fa;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.search-filter-section h2 {
+  font-size: 2rem;
+  color: #0b2545;
+  margin-bottom: 40px;
+}
+
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.search-form .form-group {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.search-form .form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.search-form select,
+.search-form input[type="range"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.95rem;
+  transition: border 0.3s ease;
+}
+
+.search-form select:focus,
+.search-form input[type="range"]:focus {
+  border-color: #c59d5f;
+  outline: none;
+}
+
+.search-form output {
+  margin-top: 5px;
+  font-weight: 500;
+  color: #444;
+}
+
+.search-form .full-width {
+  flex: 1 1 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.search-btn {
+  padding: 12px 30px;
+  background-color: #c59d5f;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #b08945;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="https://www.creativefabrica.com/wp-content/uploads/2020/09/25/luxury-real-estate-logo-design-Graphics-5672003-1.jpg" alt="PrimeNest Realty Logo" />
+    </div>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#featured">Properties</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-content" data-sr>
+      <h1>Find Your Perfect Home with PrimeNest Realty</h1>
+      <p>Premium homes, commercial spaces, and personalized service tailored just for you.</p>
+      <div class="cta-btns">
+        <a href="#featured">Explore Listings</a>
+        <a href="#contact">Book a Tour</a>
+      </div>
+    </div>
+  </section>
+<section id="featured" class="featured-properties">
+  <h2>Featured Properties</h2>
+  <div class="properties-grid">
+
+    <!-- Property Card -->
+    <div class="property-card" onclick="openLightbox(this)">
+      <img src="https://www.latitudemedcenter.com/wp-content/uploads/2019/03/penthouses3.jpg" alt="Luxury Home" />
+      <div class="card-info">
+        <h3>Rs.1,200,000</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Bandra ,Mumbai</p>
+        <p><i class="fas fa-home"></i> 4 BHK • 3500 sqft</p>
+        <button class="view-btn">View Property</button>
+      </div>
+    </div>
+
+    <!-- Duplicate 5 more -->
+    <div class="property-card" onclick="openLightbox(this)">
+      <img src="https://cdn.homedit.com/wp-content/uploads/2019/05/Luxury-NYC-apartment-tour-how-to-decorate-a-luxury-living.jpg" alt="Modern Villa" />
+      <div class="card-info">
+        <h3>Rs.9,800,000</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Tambaram ,Chennai</p>
+        <p><i class="fas fa-home"></i> 3 BHK • 2800 sqft</p>
+        <button class="view-btn">View Property</button>
+      </div>
+    </div>
+
+    <div class="property-card" onclick="openLightbox(this)">
+      <img src="https://res.cloudinary.com/g5-assets-cld/image/upload/x_0,y_491,h_4413,w_7356,c_crop/q_auto,f_auto,fl_lossy,g_center,h_1200,w_2000/g5/g5-c-5g13txeqo-mark-taylor-companies-client/g5-cl-1j73ew2zby-the-core-scottsdale/uploads/DSC_7198-Edit-2_1_n06pxw.jpg" alt="City Apartment" />
+      <div class="card-info">
+        <h3>Rs.6,200,000</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Ernakulam ,Cochin</p>
+        <p><i class="fas fa-home"></i> 2 BHK • 1600 sqft</p>
+        <button class="view-btn">View Property</button>
+      </div>
+    </div>
+
+    <div class="property-card" onclick="openLightbox(this)">
+      <img src="https://pix10.agoda.net/hotelImages/103/1030438/1030438_15081214210034117680.png?s=1024x768" alt="Real Estate Property" />
+      <div class="card-info">
+        <h3>Rs.8,400,000</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Mylapore ,Chennai</p>
+        <p><i class="fas fa-home"></i> 3 BHK • 2400 sqft</p>
+        <button class="view-btn">View Property</button>
+      </div>
+    </div>
+
+    <div class="property-card" onclick="openLightbox(this)">
+      <img src="https://toastdesign.com.au/wp-content/uploads/luxury_apartment_branding.jpg" alt="Interior" />
+      <div class="card-info">
+        <h3>Rs.7,000,000</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Charminar ,Hyderabad</p>
+        <p><i class="fas fa-home"></i> 3 BHK • 2100 sqft</p>
+        <button class="view-btn">View Property</button>
+      </div>
+    </div>
+
+    <div class="property-card" onclick="openLightbox(this)">
+      <img src="https://i.pinimg.com/originals/2d/ea/50/2dea50821523d19c65e9191cdb6c0f29.jpg" alt="Living Room" />
+      <div class="card-info">
+        <h3>Rs.8,000,000</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Guindy ,Chennai</p>
+        <p><i class="fas fa-home"></i> 4 BHK • 3000 sqft</p>
+        <button class="view-btn">View Property</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="search-filter-section" id="search">
+  <div class="container">
+    <h2>Find a Property That Fits Your Lifestyle</h2>
+    <form class="search-form">
+      <div class="form-group">
+        <label for="location">Location</label>
+        <select id="location">
+          <option value="">Select Location</option>
+          <option>Chennai</option>
+          <option>Bangalore</option>
+          <option>Hyderabad</option>
+          <option>Mumbai</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Property Type</label>
+        <select id="type">
+          <option value="">Select Type</option>
+          <option>Apartment</option>
+          <option>Villa</option>
+          <option>Studio</option>
+          <option>Commercial</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="bedrooms">Bedrooms</label>
+        <select id="bedrooms">
+          <option value="">Any</option>
+          <option>1+</option>
+          <option>2+</option>
+          <option>3+</option>
+          <option>4+</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price Range (₹)</label>
+        <input type="range" id="price" min="1000000" max="50000000" step="500000" oninput="priceOutput.value = '₹' + parseInt(this.value).toLocaleString()" />
+        <output id="priceOutput">₹10,00,000</output>
+      </div>
+
+      <div class="form-group">
+        <label for="amenities">Amenities</label>
+        <select id="amenities">
+          <option value="">Select</option>
+          <option>Swimming Pool</option>
+          <option>Gym</option>
+          <option>Parking</option>
+          <option>Security</option>
+        </select>
+      </div>
+
+      <div class="form-group full-width">
+        <button type="submit" class="search-btn">Search Now</button>
+      </div>
+    </form>
+  </div>
+</section>
+<!-- About Section -->
+<section id="about" style="padding: 4rem 2rem; background-color: #fff; text-align: center;">
+  <div style="max-width: 800px; margin: auto;">
+    <h2 style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;">About PrimeNest</h2>
+    <p style="font-size: 1.1rem; color: var(--muted); line-height: 1.6;">
+      PrimeNest Realty is a premier real estate agency committed to helping you find your dream property. Whether you're looking for luxury apartments, spacious villas, or commercial spaces, we provide personalized and professional assistance every step of the way.
+    </p>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" style="background-color: #f9f9f9; padding: 4rem 2rem; text-align: center;">
+  <h2 style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary); margin-bottom: 2rem;">What Our Clients Say</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: auto;">
+    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      <p style="color: var(--muted); font-style: italic;">"PrimeNest helped us find our perfect home in just a week. Their team is incredibly professional and responsive!"</p>
+      <p style="margin-top: 1rem; font-weight: bold;">— Aarti Mehta</p>
+    </div>
+    <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      <p style="color: var(--muted); font-style: italic;">"We loved the personal touch. They really listened to what we wanted and delivered exactly that."</p>
+      <p style="margin-top: 1rem; font-weight: bold;">— Rohit Sharma</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" style="padding: 4rem 2rem; background-color: #fff; text-align: center;">
+  <div style="max-width: 800px; margin: auto;">
+    <h2 style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;">Get In Touch</h2>
+    <p style="margin-bottom: 2rem; color: var(--muted); font-size: 1.1rem;">Have questions or want to book a tour? Reach out today.</p>
+    <form style="display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: auto;">
+      <input type="text" placeholder="Your Name" style="padding: 12px; border-radius: 8px; border: 1px solid #ccc;" required>
+      <input type="email" placeholder="Your Email" style="padding: 12px; border-radius: 8px; border: 1px solid #ccc;" required>
+      <textarea placeholder="Your Message" rows="4" style="padding: 12px; border-radius: 8px; border: 1px solid #ccc;" required></textarea>
+      <button type="submit" class="search-btn">Send Message</button>
+    </form>
+  </div>
+</section>
+
+
+
+<!-- Lightbox Modal -->
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightbox-img" src="" alt="Full Property View" />
+</div>
+<script>
+  // ScrollReveal
+  ScrollReveal().reveal('[data-sr]', {
+    delay: 200,
+    distance: '50px',
+    duration: 1000,
+    origin: 'bottom',
+    reset: true
+  });
+
+  // Lightbox Logic
+  function openLightbox(card) {
+    const imgSrc = card.querySelector("img").src;
+    document.getElementById("lightbox-img").src = imgSrc;
+    document.getElementById("lightbox").style.display = "flex";
+  }
+
+  // Search Filtering Logic
+  document.querySelector(".search-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const location = document.getElementById("location").value.toLowerCase();
+    const type = document.getElementById("type").value.toLowerCase();
+    const bedrooms = document.getElementById("bedrooms").value;
+    const price = parseInt(document.getElementById("price").value);
+    const amenities = document.getElementById("amenities").value.toLowerCase();
+
+    document.querySelectorAll(".property-card").forEach(card => {
+      const cardText = card.textContent.toLowerCase();
+      const priceMatch = parseInt(card.querySelector("h3").textContent.replace(/\D/g, "")) <= price;
+
+      const visible = (
+        (!location || cardText.includes(location)) &&
+        (!type || cardText.includes(type)) &&
+        (!bedrooms || cardText.includes(bedrooms[0])) &&
+        (!amenities || cardText.includes(amenities)) &&
+        priceMatch
+      );
+
+      card.style.display = visible ? "block" : "none";
+    });
+  });
+</script>
+
+
+</body>
+</html>  
